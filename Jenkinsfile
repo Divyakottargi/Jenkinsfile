@@ -1,14 +1,17 @@
 pipeline {
     agent any
     stages {
-        stage('GitHub Pull') {
+        stage('Build') {
             steps {
-                echo 'Jenkins has successfully pulled the code from GitHub!'
+                echo 'Building the application...'
+                bat 'echo "Version 1.0.5" > deploy_file.txt'
             }
         }
-        stage('Execution') {
+        stage('Deploy') {
             steps {
-                bat 'echo Hello from GitHub Repo'
+                echo 'Deploying to Jenkins Storage...'
+                // This "Archives" the file so it appears on your dashboard
+                archiveArtifacts artifacts: 'deploy_file.txt', fingerprint: true
             }
         }
     }
